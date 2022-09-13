@@ -1,25 +1,31 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-
+import { useAuthenticationUserGuard, useOnlyUnAuthenticationUserGuard } from '@/router/auth'
+import AuthPage from '@/pages/AuthPage.vue'
+import MainPage from '@/pages/MainPage.vue'
 Vue.use(VueRouter)
-
 const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: MainPage,
+    beforeEnter: useAuthenticationUserGuard
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/auth',
+    name: 'auth',
+    component: AuthPage,
+    beforeEnter: useOnlyUnAuthenticationUserGuard
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: AuthPage,
+    beforeEnter: (to, from, next) => {
+      console.log(1)
+    }
   }
 ]
-
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
