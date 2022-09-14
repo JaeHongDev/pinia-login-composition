@@ -12,22 +12,33 @@
 </template>
 
 <script lang="ts">
-import Vue, { ref } from 'vue'
+import Vue, { ref, watch } from 'vue'
 import PresentLayout from '@/layouts/PresentLayout.vue'
 import { isAuthenticated } from '@/composable/auth'
+import { useAuthStore } from '@/store/auth'
+import { useRouter } from 'vue-router/composables'
 
 export default Vue.extend({
   name: 'App',
   components: { PresentLayout },
   setup: () => {
-    console.log(isAuthenticated())
-    const isLogin = ref(isAuthenticated())
+    const authStore = useAuthStore()
+    const router = useRouter()
+    watch(() => authStore.user, () => {
+      isLogin.value = authStore.isLoggedIn()
+    })
+    const isLogin = ref(authStore.isLoggedIn())
 
     const login = () => {
-      isLogin.value = true
+      authStore.login({
+        id: '',
+        name: '',
+        managerGrade: '0'
+      })
+      router.push('/')
     }
     const logout = () => {
-      isLogin.value = false
+      authStore.logout()
     }
     return {
       isLogin,

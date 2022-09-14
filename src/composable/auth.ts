@@ -1,8 +1,7 @@
 import { useAuthStore } from '@/store/auth'
-
 export const isAuthenticated = () => {
-  const { user } = useAuthStore()
-  return user !== null
+  const store = useAuthStore()
+  return store.isLoggedIn()
 }
 
 export const useAuthenticate = () => {

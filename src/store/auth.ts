@@ -11,6 +11,7 @@ interface IAuthStore {
 }
 
 export const useAuthStore = defineStore('auth', {
+
   state: () : IAuthStore => ({
     user: null
   }),
@@ -20,6 +21,11 @@ export const useAuthStore = defineStore('auth', {
     },
     logout () {
       this.user = null
+    }
+  },
+  getters: {
+    isLoggedIn: (state) => {
+      return () => state.user !== null
     }
   }
 })

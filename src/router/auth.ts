@@ -9,7 +9,7 @@ import { isAuthenticated } from '@/composable/auth'
  */
 export const useOnlyUnAuthenticationUserGuard = (to:Route, from: Route, next: NavigationGuardNext) => {
   console.log(isAuthenticated())
-  console.log(1)
+  console.log('guard')
   if (isAuthenticated()) {
     next({ path: '/' })
     return

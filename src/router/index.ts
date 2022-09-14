@@ -3,7 +3,7 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import { useAuthenticationUserGuard, useOnlyUnAuthenticationUserGuard } from '@/router/auth'
 import AuthPage from '@/pages/AuthPage.vue'
 import MainPage from '@/pages/MainPage.vue'
-Vue.use(VueRouter)
+import { isAuthenticated, useAuthenticate } from '@/composable/auth'
 const routes: Array<RouteConfig> = [
   {
     path: '/',
@@ -16,14 +16,6 @@ const routes: Array<RouteConfig> = [
     name: 'auth',
     component: AuthPage,
     beforeEnter: useOnlyUnAuthenticationUserGuard
-  },
-  {
-    path: '/test',
-    name: 'test',
-    component: AuthPage,
-    beforeEnter: (to, from, next) => {
-      console.log(1)
-    }
   }
 ]
 const router = new VueRouter({
